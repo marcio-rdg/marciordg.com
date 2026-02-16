@@ -1,26 +1,24 @@
-# --- Segredos e Autenticação ---
-.env
-.env.local
-*.pem
-*.key
-*.pfx
-
-# --- Logs e Debug ---
+# Logs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# --- Dependências e Build ---
-/node_modules
-/dist
-/build
-/venv
-/bin
+node_modules
+dist
+dist-ssr
+*.local
 
-# --- Sistema e IDE ---
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-.idea/
-.vscode/
-*.swp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
