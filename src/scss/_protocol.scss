@@ -1,0 +1,92 @@
+@use 'var'as x;
+
+.protocol {
+    padding: x.$u9 0;
+
+    &__container {
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__title {
+        span.section-title {
+            color: var(--primary);
+        }
+    }
+
+    &__content {
+        margin-top: x.$u5;
+        display: flex;
+    }
+
+    &__line-box {
+        width: 64px;
+        min-width: 64px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__line {
+        display: block;
+        background-color: var(--light-3);
+        height: 98%;
+        width: 3px;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: x.$u3;
+    }
+
+    &__card {
+        max-width: 800px;
+        position: relative;
+        background-color: var(--dark-3);
+        transition: all 300ms ease-in-out;
+        user-select: none;
+
+        &__list {
+            display: flex;
+            flex-direction: column;
+            gap: x.$u1;
+        }
+
+        &__item {
+            font-size: x.$text-sm;
+            display: flex;
+            align-items: center;
+            gap: x.$u1;
+            color: var(--light-2);
+
+            svg {
+                fill: var(--primary);
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+        &::after {
+            content: "";
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: var(--light-3);
+            border: 2px solid var(--light-2);
+            border-radius: 100%;
+            left: -42px;
+            top: 0;
+            transition: all 300ms ease-in-out;
+        }
+
+        &:hover {
+            border-color: var(--primary);
+
+            &::after {
+                background-color: var(--primary);
+                border-color: var(--primary);
+            }
+        }
+    }
+}

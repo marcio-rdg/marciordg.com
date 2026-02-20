@@ -1,0 +1,53 @@
+@use 'var'as x;
+
+.arsenal {
+    background-color: var(--dark-3);
+    padding: x.$u8 0;
+
+    &__texts {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__tags {
+        display: flex;
+        gap: x.$u2;
+    }
+
+    &__tag {
+        background-color: var(--dark-2);
+        padding: x.$u1 x.$u3;
+        color: var(--light-2);
+        border-radius: x.$u6;
+        border: solid 1px var(--light-3);
+        font-size: x.$text-base;
+        user-select: none;
+    }
+
+    &__content {
+        margin-top: x.$u3;
+        display: flex;
+        flex-wrap: wrap;
+        gap: x.$u2;
+    }
+
+    &__card {
+        flex: 1;
+        min-width: 300px;
+        transition: all 300ms ease-in-out;
+
+        svg {
+            fill: var(--primary);
+            background-color: var(--dark-3);
+            width: 32px;
+            height: 32px;
+            padding: x.$u1;
+            border-radius: x.$u1;
+        }
+
+        &:hover {
+            border-color: var(--primary);
+        }
+    }
+}
