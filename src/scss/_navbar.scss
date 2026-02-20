@@ -1,0 +1,49 @@
+@use 'var'as x;
+
+header {
+    background-color: var(--dark-1);
+    border-bottom: 1px solid var(--light-3);
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+}
+
+.navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+
+    &__links {
+        display: flex;
+        gap: x.$u5;
+    }
+
+    &__logo {
+        @include x.space(700);
+
+        span {
+            color: var(--primary);
+        }
+    }
+
+    &__link {
+        font-size: x.$text-base;
+    }
+
+    &__cta {
+        font-size: x.$text-base;
+        background-color: var(--dark-3);
+        padding: x.$u2 x.$u5;
+        border: 1px var(--light-2) solid;
+        border-radius: x.$u1;
+        text-transform: uppercase;
+        color: var(--light-2);
+
+        @include x.space(600);
+
+        &:hover {
+            border-color: var(--primary);
+        }
+    }
+}

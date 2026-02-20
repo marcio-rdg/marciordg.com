@@ -1,0 +1,78 @@
+@use "sass:map";
+@use "sass:math";
+@use "sass:color";
+
+//Fontes
+@mixin inter($w : 400) {
+    font-family: "Inter", sans-serif;
+    font-weight: $w;
+    font-style: normal;
+}
+
+@mixin space($w : 400) {
+    font-family: "Space Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: $w;
+    font-style: normal;
+}
+
+//Tamanho de Fontes
+$type-scale-base: 1.4rem;
+$type-scale-ratio: 1.25;
+
+$font-sizes: ("xs": math.div($type-scale-base, $type-scale-ratio),
+    "sm": math.div($type-scale-base, 1.2),
+    "base": $type-scale-base,
+    "md": $type-scale-base * $type-scale-ratio,
+    "lg": $type-scale-base * math.pow($type-scale-ratio, 2),
+    "xl": $type-scale-base * math.pow($type-scale-ratio, 3),
+    "xxl": $type-scale-base * math.pow($type-scale-ratio, 4),
+    "huge": $type-scale-base * math.pow($type-scale-ratio, 5));
+
+$text-xs: map.get($font-sizes, "xs");
+$text-sm: map.get($font-sizes, "sm");
+$text-base: map.get($font-sizes, "base");
+$text-md: map.get($font-sizes, "md");
+$text-lg: map.get($font-sizes, "lg");
+$text-xl: map.get($font-sizes, "xl");
+$text-xxl: map.get($font-sizes, "xxl");
+$text-huge: map.get($font-sizes, "huge");
+
+//Gap
+$u1 : 4px;
+$u2 : 8px;
+$u3 : 12px;
+$u4 : 16px;
+$u5 : 24px;
+$u6 : 32px;
+$u7 : 48px;
+$u8 : 64px;
+$u9 : 80px;
+$u10 : 128px;
+
+//Colors
+$brand-primary: #EF4444;
+
+$dark-1: #080808;
+$dark-2: #0A0A0A;
+$dark-3: #121212;
+
+$light-1: #E5E5E5;
+$light-2: #6B6B6B;
+$light-3: #333333;
+
+:root {
+    --primary: #{$brand-primary};
+    --primary-t: #{color.adjust($brand-primary, $alpha: -0.9)};
+
+    --dark-1: #{$dark-1};
+    --dark-2: #{$dark-2};
+    --dark-3: #{$dark-3};
+
+    --light-1: #{$light-1};
+    --light-2: #{$light-2};
+    --light-3: #{$light-3};
+}
+
+//util
+$max-container:1200px;

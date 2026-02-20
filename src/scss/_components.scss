@@ -1,0 +1,105 @@
+@use 'var'as x;
+
+.card {
+    border-radius: x.$u4;
+    background-color: var(--dark-3);
+    border: var(--light-3) solid 1px;
+    padding: x.$u6;
+}
+
+.section-title {
+    @include x.inter(600);
+    color: var(--light-1);
+    font-size: x.$text-xxl;
+}
+
+.tag {
+    background-color: var(--light-3);
+    color: var(--light-1);
+    border-radius: x.$u1;
+    padding: x.$u1 x.$u2;
+    display: block;
+    max-width: fit-content;
+    @include x.space(800);
+    text-transform: uppercase;
+    font-size: x.$text-sm;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--light-1);
+    @include x.inter(600);
+}
+
+small {
+    color: var(--light-1);
+    font-size: x.$text-sm;
+}
+
+a,
+p,
+span,
+li {
+    color: var(--light-1);
+    @include x.inter(400);
+    font-size: x.$text-md;
+}
+
+a {
+    text-decoration: none;
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+        color: var(--primary);
+    }
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+header,
+section,
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    color: var(--light-1);
+
+    &:active {
+        transform: scale(0.95);
+        filter: brightness(0.85);
+    }
+}
+
+.container {
+    width: 90%;
+    height: 100%;
+    max-width: x.$max-container;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}

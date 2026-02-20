@@ -1,0 +1,186 @@
+@use 'var'as x;
+
+.hero {
+    height: 100vh;
+    padding: 80px 0;
+    position: relative;
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-image:
+            linear-gradient(to right, var(--light-3) 2px, transparent 1px),
+            linear-gradient(to bottom, var(--light-3) 2px, transparent 1px);
+
+        background-size: 48px 48px;
+
+        mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, var(--dark-1) 40%, transparent 75%);
+        -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, var(--dark-1) 40%, transparent 75%);
+
+        opacity: 0.06;
+        pointer-events: none;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: row;
+        gap: x.$u8;
+    }
+
+    &__content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: x.$u3;
+        animation: float 6s infinite;
+    }
+
+    &__tag {
+        background-color: var(--primary-t);
+        display: block;
+        width: fit-content;
+        padding: x.$u3 x.$u6;
+        border-radius: 0 x.$u1 x.$u1 0;
+        color: var(--primary);
+        @include x.space(600);
+        border-left: 4px solid var(--primary);
+    }
+
+    &__title {
+        font-size: 56px;
+        line-height: 6.4rem;
+        font-weight: 800;
+    }
+
+    &__text {
+        font-size: x.$text-md;
+        color: var(--light-2);
+
+        span {
+            font-size: x.$text-md;
+            font-weight: 600;
+        }
+    }
+
+    &__check-list {
+        display: flex;
+        gap: x.$u4;
+    }
+
+    &__check-item {
+        font-size: x.$text-xs;
+        display: flex;
+        align-items: center;
+        color: var(--light-2);
+        gap: x.$u1;
+
+        svg {
+            width: 10px;
+            fill: var(--primary);
+        }
+    }
+
+    &__visual {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__img {
+        aspect-ratio: 3/4;
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        padding: x.$u6;
+        width: 75%;
+        border-radius: x.$u2;
+        border: 1px solid var(--light-3);
+        position: relative;
+        overflow: hidden;
+        transition: all 300ms ease-in-out;
+        user-select: none;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1;
+        }
+
+        &__insta {
+            z-index: 2;
+            @include x.space(600);
+            color: var(--primary);
+        }
+
+        &__position {
+            z-index: 2;
+        }
+
+        &:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+        }
+    }
+
+    &__audit-form {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__audit-group {
+        width: 100%;
+        display: flex;
+        background-color: var(--dark-3);
+        padding: x.$u1;
+        border-radius: x.$u2;
+        border: 1px solid var(--light-3);
+
+        &:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+
+        &__input {
+            flex: 1;
+            border: none;
+            background-color: transparent;
+            padding-left: x.$u2;
+            outline: none;
+            color: var(--light-1);
+            transition: all ease-in-out 300ms;
+
+            &::placeholder {
+                color: var(--light-3);
+                font-size: x.$text-base;
+            }
+        }
+
+        &__button {
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: x.$u2;
+            font-size: x.$text-base;
+            padding: x.$u3 x.$u6;
+            border-radius: x.$u1;
+
+            svg {
+                width: 16px;
+            }
+
+            &:hover {
+                box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+            }
+        }
+    }
+}

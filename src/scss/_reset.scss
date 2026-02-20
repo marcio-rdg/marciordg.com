@@ -1,3 +1,5 @@
+@use 'var'as x;
+
 html {
     font-size: 10px;
     scroll-behavior: smooth;
@@ -12,4 +14,18 @@ html {
 html,
 body {
     overflow-x: hidden;
+}
+
+body {
+    background-color: var(--dark-2);
+}
+
+::selection {
+    background-color: var(--primary);
+    color: var(--light-1);
+}
+
+::-moz-selection {
+    background-color: var(--primary);
+    color: var(--light-1);
 }
