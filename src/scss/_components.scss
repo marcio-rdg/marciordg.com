@@ -43,6 +43,7 @@
     @include x.space(800);
     text-transform: uppercase;
     font-size: x.$text-sm;
+    height: fit-content;
 }
 
 main {
