@@ -1,0 +1,53 @@
+@use 'var'as x;
+
+.solutions {
+    background-color: var(--dark-1);
+    padding: x.$u9 0;
+
+
+    &__small {
+        font-size: x.$text-base;
+        color: var(--primary);
+    }
+
+    &__content {
+        display: flex;
+        gap: x.$u2;
+        margin-top: x.$u5;
+    }
+
+    &__card {
+
+
+        svg {
+            fill: var(--primary);
+            background-color: var(--dark-3);
+            width: 32px;
+            height: 32px;
+            padding: x.$u1;
+            border-radius: x.$u1;
+        }
+
+        &__title {
+            @include x.space(700);
+        }
+
+        &__item {
+            font-size: x.$text-sm;
+            color: var(--light-2);
+            display: flex;
+            align-items: center;
+
+            svg {
+                background-color: transparent;
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+
+        &:hover {
+            border-color: var(--primary);
+        }
+    }
+}

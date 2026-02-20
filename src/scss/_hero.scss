@@ -39,10 +39,11 @@
     }
 
     &__tag {
+        font-size: x.$text-base;
         background-color: var(--primary-t);
         display: block;
         width: fit-content;
-        padding: x.$u3 x.$u6;
+        padding: x.$u2 x.$u5;
         border-radius: 0 x.$u1 x.$u1 0;
         color: var(--primary);
         @include x.space(600);
