@@ -37,10 +37,14 @@
                   type="text"
                   name=""
                   placeholder="Cole seu site: www.seusite.com.br"
-                  id="siteURL"
+                  id="siteUrl"
                   class="hero__audit-group__input"
                 />
-                <button type="button" class="hero__audit-group__button">
+                <button
+                  type="button"
+                  id="auditButton"
+                  class="hero__audit-group__button"
+                >
                   <svg-load name="eye_tracking" />
                   Analisar
                 </button>
@@ -284,6 +288,111 @@
                 </p>
               </li>
             </ul>
+          </div>
+        </div>
+      </section>
+      <section class="calculator">
+        <div class="calculator__container container">
+          <h2 class="calculator__title section-title">
+            Calculadora de Custo de Oportunidade
+          </h2>
+          <p class="calculator__text section-text">
+            A matemática é simples: <span>Lentidão = Prejuízo.</span>
+          </p>
+          <div class="calculator__tool">
+            <form class="calculator__form">
+              <div class="calculator__form-group__texts">
+                <div class="calculator__form__input-wrapper">
+                  <label for="calcPeople">Visitantes / Mês</label>
+                  <div class="calculator__form__input-box">
+                    <svg-load name="group" />
+                    <input
+                      type="number"
+                      name="calcPeople"
+                      id="calcPeople"
+                      placeholder="0"
+                      value="15000"
+                    />
+                  </div>
+                </div>
+                <div class="calculator__form__input-wrapper">
+                  <label for="calcPeople">Ticket Médio (R$)</label>
+                  <div class="calculator__form__input-box">
+                    <svg-load name="money" />
+                    <input
+                      type="number"
+                      name="calcTicked"
+                      id="calcTicked"
+                      placeholder="0"
+                      value="150"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="calculator__form-group__slide">
+                <div class="calculator__form__input-wrapper">
+                  <label for="calcConv">Taxa de Conversão Atual (%)</label>
+                  <input
+                    type="range"
+                    name="calcConv"
+                    id="calcConv"
+                    min="0.1"
+                    max="5"
+                    step="0.1"
+                    value="1"
+                  />
+                </div>
+                <div class="calculator__form-group__labels-container">
+                  <span class="label-start">0.1%</span>
+                  <span id="current-value" class="label-current">1%</span>
+                  <span class="label-end">5.0%</span>
+                </div>
+                <div class="calculator__form__input-wrapper">
+                  <label for="calcSpeed"
+                    >Velocidade Atual do Site (Segundos)</label
+                  >
+                  <input
+                    type="range"
+                    name="calcSpeed"
+                    id="calcSpeed"
+                    min="0.5"
+                    max="10"
+                    step="0.5"
+                  />
+                </div>
+                <div class="calculator__form-group__labels-container">
+                  <span class="label-start">1s (Rápido)</span>
+                  <span id="current-value" class="label-current">4s</span>
+                  <span class="label-end">10s (Crítico)</span>
+                </div>
+              </div>
+              <small class="calculator__form__small"
+                >*Baseado em estudos da Akamai/Google: 1s de atraso pode reduzir
+                conversões em até 20%.</small
+              >
+            </form>
+            <div class="calculator__display">
+              <h3 class="calculator__display__title">⚠️ DINHEIRO NA MESA</h3>
+              <div class="calculator__display__group">
+                <p class="calculator__display__title-m">
+                  Prejuízo Mensal Estimado
+                </p>
+                <p class="calculator__display__number-m">R$ 6.750,00</p>
+              </div>
+              <span class="calculator__display__line"></span>
+              <div class="calculator__display__group">
+                <p class="calculator__display__title-y">
+                  Prejuízo Anual Projetado
+                </p>
+                <p class="calculator__display__number-y">R$ 81.000,00</p>
+              </div>
+              <p class="calculator__display__desc">
+                Valor que você deixa de ganhar por lentidão.
+              </p>
+              <button class="calculator__display__button">
+                ESTANCAR SANGRIA
+              </button>
+            </div>
           </div>
         </div>
       </section>
