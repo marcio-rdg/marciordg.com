@@ -1,6 +1,8 @@
 import '@/scss/style.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const whatsappNumber = '5533999486162';
+
   function auditSite() {
     const urlInput = document.getElementById('siteUrl');
     const url = urlInput.value.trim();
@@ -9,9 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const message = `Olá Márcio! Acabei de solicitar uma auditoria express para o meu site: ${url}`;
+    const message = `Olá, Márcio! Acabei de solicitar uma auditoria express para o meu site: ${url}`;
     const encodedMessage = encodeURIComponent(message);
-    const whatsappNumber = '5533999486162';
     window.open(
       `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
       '_blank'
@@ -20,6 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const adutiBtn = document.querySelector('#auditButton');
   adutiBtn.addEventListener('click', auditSite);
+
+  function stopBleeding() {
+    const message = `Olá, Márcio! Não quero mais deixar dinheiro na mesa!`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(
+      `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+      '_blank'
+    );
+  }
+
+  const stopBleedingBtn = document.querySelector('#stopBleeding');
+  stopBleedingBtn.addEventListener('click', stopBleeding);
 
   const ranges = document.querySelectorAll('input[type="range"]');
 
@@ -151,4 +164,48 @@ document.addEventListener('DOMContentLoaded', () => {
       element.classList.add('active');
     });
   });
+
+  function updateCalculator() {
+    const visitors = parseInt(document.getElementById('visitors').value) || 0;
+    const ticket = parseFloat(document.getElementById('ticket').value) || 0;
+    const convRate = parseFloat(document.getElementById('conversion').value);
+    const speed = parseFloat(document.getElementById('speed').value);
+
+    document.getElementById('conv-display').innerText = convRate + '%';
+    document.getElementById('speed-display').innerText = speed + 's';
+
+    const optimalSpeed = 1.0;
+    let conversionBoostFactor = 0;
+
+    if (speed > optimalSpeed) {
+      const speedDiff = speed - optimalSpeed;
+      conversionBoostFactor = speedDiff * 0.15;
+    }
+
+    if (conversionBoostFactor > 1.0) conversionBoostFactor = 1.0;
+
+    const currentMonthlyRevenue = visitors * (convRate / 100) * ticket;
+
+    const potentialMonthlyRevenue =
+      currentMonthlyRevenue * (1 + conversionBoostFactor);
+
+    const lostMonthlyRevenue = potentialMonthlyRevenue - currentMonthlyRevenue;
+    const lostAnnualRevenue = lostMonthlyRevenue * 12;
+
+    document.getElementById('monthly-loss').innerText =
+      lostMonthlyRevenue.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      });
+    document.getElementById('annual-loss').innerText =
+      lostAnnualRevenue.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      });
+  }
+
+  ['visitors', 'ticket', 'conversion', 'speed'].forEach((id) => {
+    document.getElementById(id).addEventListener('input', updateCalculator);
+  });
+  updateCalculator();
 });

@@ -309,7 +309,7 @@
                     <input
                       type="number"
                       name="calcPeople"
-                      id="calcPeople"
+                      id="visitors"
                       placeholder="0"
                       value="15000"
                     />
@@ -322,7 +322,7 @@
                     <input
                       type="number"
                       name="calcTicked"
-                      id="calcTicked"
+                      id="ticket"
                       placeholder="0"
                       value="150"
                     />
@@ -335,7 +335,7 @@
                   <input
                     type="range"
                     name="calcConv"
-                    id="calcConv"
+                    id="conversion"
                     min="0.1"
                     max="5"
                     step="0.1"
@@ -344,7 +344,7 @@
                 </div>
                 <div class="calculator__form-group__labels-container">
                   <span class="label-start">0.1%</span>
-                  <span id="current-value" class="label-current">1%</span>
+                  <span class="label-current" id="conv-display">1%</span>
                   <span class="label-end">5.0%</span>
                 </div>
                 <div class="calculator__form__input-wrapper">
@@ -354,15 +354,16 @@
                   <input
                     type="range"
                     name="calcSpeed"
-                    id="calcSpeed"
+                    id="speed"
                     min="0.5"
                     max="10"
                     step="0.5"
+                    value="3"
                   />
                 </div>
                 <div class="calculator__form-group__labels-container">
                   <span class="label-start">1s (Rápido)</span>
-                  <span id="current-value" class="label-current">4s</span>
+                  <span class="label-current" id="speed-display">4s</span>
                   <span class="label-end">10s (Crítico)</span>
                 </div>
               </div>
@@ -377,19 +378,23 @@
                 <p class="calculator__display__title-m">
                   Prejuízo Mensal Estimado
                 </p>
-                <p class="calculator__display__number-m">R$ 6.750,00</p>
+                <p class="calculator__display__number-m" id="monthly-loss">
+                  R$ 6.750,00
+                </p>
               </div>
               <span class="calculator__display__line"></span>
               <div class="calculator__display__group">
                 <p class="calculator__display__title-y">
                   Prejuízo Anual Projetado
                 </p>
-                <p class="calculator__display__number-y">R$ 81.000,00</p>
+                <p class="calculator__display__number-y" id="annual-loss">
+                  R$ 81.000,00
+                </p>
               </div>
               <p class="calculator__display__desc">
                 Valor que você deixa de ganhar por lentidão.
               </p>
-              <button class="calculator__display__button">
+              <button class="calculator__display__button" id="stopBleeding">
                 ESTANCAR SANGRIA
               </button>
             </div>
@@ -400,23 +405,31 @@
         <div class="projects__container container">
           <h2 class="projects__title section-title">Track Record</h2>
           <div class="projects__content">
-            <div class="projects__card">
-              <div class="projects__card__img"><img src="" alt="" /></div>
+            <a
+              class="projects__card"
+              target="_blank"
+              href="https://www.linkedin.com/posts/marcio-rdg_coding-php-cybersecurity-activity-7429269711583899648-sSrm?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFbluMoBgfgMoATOv1OKsdkr4R7CQs7OpCY"
+            >
+              <div class="projects__card__img">
+                <img
+                  src="./images/project_armazem.webp"
+                  alt="Sistema do Armazém, sass criado para uma empresa de gv."
+                />
+              </div>
               <div class="projects__card__content">
                 <div class="projects__card__titles">
-                  <h3 class="projects__card__title">SaaS Financeiro</h3>
+                  <h3 class="projects__card__title">SaaS Armazém</h3>
                   <span class="projects__card__tag tag">PHP/JS</span>
                 </div>
                 <p class="projects__card__text card-text">
-                  Desenvolvimento de painel administrativo complexo. Redução de
-                  80% no tempo de processamento de relatórios.
+                  Sistema para cadastro de clientes vips. Com calculo automático
+                  de benefícos dos clientes. Captação de Leads para negócio
+                  local.
                 </p>
                 <div class="projects__card__metrics">
                   <div class="projects__card__metric">
-                    <small class="projects__card__metric__title"
-                      >Load Time</small
-                    >
-                    <p class="projects__card__metric__value primary">0.4s</p>
+                    <small class="projects__card__metric__title">Leads</small>
+                    <p class="projects__card__metric__value primary">CRM</p>
                   </div>
                   <div class="projects__card__metric">
                     <small class="projects__card__metric__title"
@@ -426,14 +439,21 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="projects__card">
-              <div class="projects__card__img"><img src="" alt="" /></div>
+            </a>
+            <a
+              class="projects__card"
+              target="_blank"
+              href="https://nobrk.com.br/z/1/pages/solutions/impulso-criativo/"
+            >
+              <div class="projects__card__img">
+                <img
+                  src="./images/project_impulso-criativo.webp"
+                  alt="Landing Page do pack Impulso Criativo, um pack para designers criado pela Nobrk."
+                />
+              </div>
               <div class="projects__card__content">
                 <div class="projects__card__titles">
-                  <h3 class="projects__card__title">
-                    Landing Page High-Ticket
-                  </h3>
+                  <h3 class="projects__card__title">LP - Impulso Criativo</h3>
                   <span class="projects__card__tag tag">HTML/GTM</span>
                 </div>
                 <p class="projects__card__text card-text">
@@ -448,6 +468,40 @@
                     <p class="projects__card__metric__value primary">+45%</p>
                   </div>
                   <div class="projects__card__metric">
+                    <small class="projects__card__metric__title">ROAS</small>
+                    <p class="projects__card__metric__value">5x</p>
+                  </div>
+                </div>
+              </div>
+            </a>
+            <a
+              class="projects__card"
+              target="_blank"
+              href="https://nobrk.com.br/"
+            >
+              <div class="projects__card__img">
+                <img
+                  src="./images/project_nobrk.webp"
+                  alt="Site da Nobrk, empresa de soluções digitais."
+                />
+              </div>
+              <div class="projects__card__content">
+                <div class="projects__card__titles">
+                  <h3 class="projects__card__title">Site Nobrk</h3>
+                  <span class="projects__card__tag tag">API/Integration</span>
+                </div>
+                <p class="projects__card__text card-text">
+                  Integração de Conversions API (Meta) via servidor para
+                  contornar bloqueios do iOS14. Sistema de filtragem de leads.
+                </p>
+                <div class="projects__card__metrics">
+                  <div class="projects__card__metric">
+                    <small class="projects__card__metric__title"
+                      >Event Match</small
+                    >
+                    <p class="projects__card__metric__value primary">8.8/10</p>
+                  </div>
+                  <div class="projects__card__metric">
                     <small class="projects__card__metric__title"
                       >Lighthouse</small
                     >
@@ -455,32 +509,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="projects__card">
-              <div class="projects__card__img"><img src="" alt="" /></div>
-              <div class="projects__card__content">
-                <div class="projects__card__titles">
-                  <h3 class="projects__card__title">E-commerce API</h3>
-                  <span class="projects__card__tag tag">API/Integration</span>
-                </div>
-                <p class="projects__card__text card-text">
-                  Integração de Conversions API (Meta) via servidor para
-                  contornar bloqueios do iOS14.
-                </p>
-                <div class="projects__card__metrics">
-                  <div class="projects__card__metric">
-                    <small class="projects__card__metric__title"
-                      >Event Match</small
-                    >
-                    <p class="projects__card__metric__value primary">9.8/10</p>
-                  </div>
-                  <div class="projects__card__metric">
-                    <small class="projects__card__metric__title">ROAS</small>
-                    <p class="projects__card__metric__value">5x</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            </a>
           </div>
         </div>
       </section>

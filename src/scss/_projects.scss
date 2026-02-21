@@ -87,5 +87,10 @@
                 }
             }
         }
+
+        &:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+        }
     }
 }
