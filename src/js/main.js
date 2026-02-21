@@ -139,4 +139,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   renderFaqs();
+
+  const ctaOptions = document.querySelectorAll('.cta__form__item');
+  ctaOptions.forEach((element) => {
+    element.addEventListener('click', (event) => {
+      ctaOptions.forEach((option) => {
+        if (option.classList.contains('active')) {
+          option.classList.remove('active');
+        }
+      });
+      element.classList.add('active');
+    });
+  });
 });
