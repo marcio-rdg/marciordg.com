@@ -1,0 +1,44 @@
+@use 'var'as x;
+
+.footer {
+
+    &__container {
+        gap: x.$u1;
+        padding-top: x.$u2;
+        padding-bottom: x.$u6;
+    }
+
+    &__list {
+        display: flex;
+        gap: x.$u3;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__text {
+        color: var(--light-2);
+        font-size: x.$text-base;
+        text-align: center;
+    }
+
+    &__link {
+        svg {
+            height: 24px;
+            stroke: var(--light-2);
+
+            &:hover {
+                stroke: var(--light-1);
+                filter: drop-shadow(var(--light-1) 0 0 1px);
+            }
+        }
+    }
+
+    &__link:nth-child(4) {
+        fill: var(--light-2);
+
+        &:hover {
+            fill: var(--light-1);
+        }
+    }
+}
