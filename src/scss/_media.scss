@@ -1,3 +1,6 @@
+@use 'var'as x;
+
+
 $breakpoints: (sm: 576px,
     md: 768px,
     lg: 992px,
@@ -15,5 +18,126 @@ $breakpoints: (sm: 576px,
 
     @else {
         @error "Breakpoint '#{$breakpoint}' não foi encontrado no mapa $breakpoints.";
+    }
+}
+
+@include mediaq(lg) {
+    .calculator__tool {
+        flex-direction: column;
+    }
+
+    .calculator__display {
+        width: 100%;
+        border-left: none;
+        border-top: 2px solid var(--primary);
+    }
+}
+
+@include mediaq(md) {
+    .hero__container {
+        flex-direction: column;
+        padding: x.$u8 0;
+    }
+
+    .hero__content {
+        max-width: 500px;
+        align-self: center;
+    }
+
+    .hero__img {
+        width: 50%;
+    }
+
+    .navbar__links {
+        display: none;
+    }
+
+    .calculator__form-group__texts {
+        flex-direction: column;
+        gap: x.$u2;
+    }
+}
+
+@include mediaq(sm) {
+    .hero__title {
+        font-size: 5rem;
+    }
+
+    .protocol__line-box {
+        display: none;
+    }
+
+    .calculator__form {
+        padding: x.$u4;
+    }
+
+    .arsenal__tags {
+        display: none;
+    }
+
+    .cta__form {
+        padding: x.$u4;
+    }
+
+    .cta__form__input-wrapper {
+        min-width: 220px;
+    }
+
+    .hero__content {
+        max-width: 95%;
+        align-self: center;
+    }
+
+    .hero__audit-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero__audit-group__button {
+        display: flex;
+        justify-content: center;
+    }
+
+    .hero__audit-group__input {
+        padding: x.$u4 x.$u2;
+    }
+
+    .hero__img {
+        width: 90%;
+    }
+
+    .navbar__cta {
+        font-size: x.$text-xs;
+    }
+
+    .section-title {
+        font-size: x.$text-xl;
+        text-align: center;
+    }
+
+    .section-text {
+        font-size: x.$text-md;
+        text-align: center;
+
+        span {
+            font-size: x.$text-md;
+        }
+    }
+
+    .calculator__display {
+        gap: x.$u2;
+    }
+
+    .solutions__small {
+        display: flex;
+        justify-content: center;
+    }
+
+    .faq__question__title {
+        font-size: x.$text-md;
+    }
+
+    .faq__question {
+        width: 100%;
     }
 }

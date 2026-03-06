@@ -208,4 +208,49 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById(id).addEventListener('input', updateCalculator);
   });
   updateCalculator();
+
+  const ctaSubmitButton = document.getElementById('form-captura');
+  ctaSubmitButton.addEventListener('submit', (evento) => {
+    evento.preventDefault();
+
+    const form = evento.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    const errors = [];
+    if (!data.ctaNome || data.ctaNome.trim().length < 3) {
+      errors.push('O nome deve ter pelo menos 3 caracteres úteis.');
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!data.ctaEmail || !emailRegex.test(data.ctaEmail)) {
+      errors.push('Formato de e-mail inválido.');
+    }
+
+    const telefoneLimpo = data.ctaTel.replace(/\D/g, '');
+    if (telefoneLimpo.length < 10 || telefoneLimpo.length > 11) {
+      errors.push('O telefone deve ter DDD + Número (10 ou 11 dígitos).');
+    }
+
+    const desafioSelecionadoElement = document.querySelector(
+      '.cta__form__item.active'
+    );
+
+    if (!desafioSelecionadoElement) {
+      errors.push('Selecione seu desafio!');
+    } else {
+      const desafioSelecionado = desafioSelecionadoElement.id;
+      console.log(desafioSelecionado);
+    }
+
+    const errorBox = document.getElementById('formError');
+
+    if (errors.length > 0) {
+      errors.forEach((erro) => {
+        errorBox.innerHTML = erro;
+      });
+    } else {
+      errorBox.innerHTML = '';
+    }
+  });
 });

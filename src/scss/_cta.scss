@@ -85,6 +85,11 @@
             }
         }
 
+        &__error {
+            color: var(--primary);
+            font-size: x.$text-base;
+        }
+
         &__button {
             color: var(--dark-3);
             @include x.space(800);
