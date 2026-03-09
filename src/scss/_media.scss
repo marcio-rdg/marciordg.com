@@ -21,6 +21,8 @@ $breakpoints: (sm: 576px,
     }
 }
 
+@include mediaq(xl) {}
+
 @include mediaq(lg) {
     .calculator__tool {
         flex-direction: column;

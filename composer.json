@@ -1,0 +1,17 @@
+{
+    "name": "marci/marciordg.com",
+    "description": "API de captura de leads para o site pessoal.",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "phpmailer/phpmailer": "^7.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "marcio-rdg",
+            "email": "o.nero.psd@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
