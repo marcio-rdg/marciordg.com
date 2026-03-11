@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (result.success) {
           errorBox.style.color = '#00ff88';
-          errorBox.innerHTML = 'Sucesso! Aguarde o redirecionamento...';
+          errorBox.innerHTML = 'Sucesso!';
 
           if (typeof fbq === 'function') {
             fbq(
@@ -365,12 +365,6 @@ document.addEventListener('DOMContentLoaded', () => {
             lead_type: result.dados_lead.desafio,
             transaction_id: result.dados_lead.transaction_id,
           });
-
-          setTimeout(() => {
-            if (result.redirect) {
-              window.location.href = result.redirect;
-            }
-          }, 1500);
         } else {
           throw new Error(result.message || 'Erro no processamento dos dados.');
         }
