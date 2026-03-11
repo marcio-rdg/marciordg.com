@@ -6,33 +6,62 @@ document.addEventListener('DOMContentLoaded', () => {
   function auditSite() {
     const urlInput = document.getElementById('siteUrl');
     const url = urlInput.value.trim();
+    if (!url) return;
 
-    if (!url) {
-      return;
-    }
+    trackWhatsAppContact('Hero - Auditoria Express', 50.0);
 
     const message = `Olá, Márcio! Acabei de solicitar uma auditoria express para o meu site: ${url}`;
-    const encodedMessage = encodeURIComponent(message);
     window.open(
-      `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
       '_blank'
     );
   }
 
   const adutiBtn = document.querySelector('#auditButton');
-  adutiBtn.addEventListener('click', auditSite);
+  if (adutiBtn) adutiBtn.addEventListener('click', auditSite);
 
   function stopBleeding() {
+    trackWhatsAppContact('Calculadora - Estancar Sangria', 75.0);
+
     const message = `Olá, Márcio! Não quero mais deixar dinheiro na mesa!`;
-    const encodedMessage = encodeURIComponent(message);
     window.open(
-      `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+      `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`,
       '_blank'
     );
   }
+  function trackWhatsAppContact(contentName, value) {
+    const eventId =
+      'wpp_' + Math.random().toString(36).slice(2, 11) + '_' + Date.now();
+
+    if (typeof fbq === 'function') {
+      fbq(
+        'track',
+        'Contact',
+        {
+          content_name: contentName,
+          content_category: 'WhatsApp',
+          value: value,
+          currency: 'BRL',
+        },
+        { eventID: eventId }
+      );
+    }
+
+    fetch('/public/api/contact.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true,
+      body: JSON.stringify({
+        event_id: eventId,
+        url: window.location.href,
+        content_name: contentName,
+        value: value,
+      }),
+    }).catch(() => {});
+  }
 
   const stopBleedingBtn = document.querySelector('#stopBleeding');
-  stopBleedingBtn.addEventListener('click', stopBleeding);
+  if (stopBleedingBtn) stopBleedingBtn.addEventListener('click', stopBleeding);
 
   const ranges = document.querySelectorAll('input[type="range"]');
 
@@ -49,25 +78,23 @@ document.addEventListener('DOMContentLoaded', () => {
     updateProgress();
   });
 
-  const faqQuestions = document.querySelectorAll('.faq__question__titles');
+  if (window.pvEventId) {
+    fetch('/public/api/pageview.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_id: window.pvEventId,
+        url: window.location.href,
+      }),
+    }).catch(() => {});
+  }
 
-  faqQuestions.forEach((question) => {
-    question.addEventListener('click', (event) => {
-      const currentCard = event.currentTarget.closest('.faq__question');
-
-      if (!currentCard) return;
-
-      const openCards = document.querySelectorAll('.faq__question.active');
-
-      openCards.forEach((card) => {
-        if (card !== currentCard) {
-          card.classList.remove('active');
-        }
-      });
-
-      currentCard.classList.toggle('active');
+  const btnWhatsappNav = document.getElementById('cta-whatsapp-nav');
+  if (btnWhatsappNav) {
+    btnWhatsappNav.addEventListener('click', () => {
+      trackWhatsAppContact('Navbar - Solicitar Analise', 50.0);
     });
-  });
+  }
 
   const faqData = [
     {
@@ -116,46 +143,73 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const faqContainer = document.querySelector('.faq__content');
-  if (!faqContainer) return;
-
-  function renderFaqs() {
-    faqContainer.innerHTML = faqData
-      .map(
-        (item, index) => `
-      <div class="faq__question"> <div class="faq__question__titles">
-          <h3 class="faq__question__title">"${item.question}"</h3>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+  if (faqContainer) {
+    const perguntasRastreadas = new Set();
+    function renderFaqs() {
+      faqContainer.innerHTML = faqData
+        .map(
+          (item) => `
+        <div class="faq__question"> <div class="faq__question__titles">
+            <h3 class="faq__question__title">"${item.question}"</h3>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
+          </div>
+          <div class="faq__answer-wrapper">
+            <p class="faq__question__response">${item.answer}</p>
+          </div>
         </div>
-        <div class="faq__answer-wrapper">
-          <p class="faq__question__response">${item.answer}</p>
-        </div>
-      </div>
-    `
-      )
-      .join('');
-  }
+      `
+        )
+        .join('');
+    }
 
-  faqContainer.addEventListener('click', (event) => {
-    const titleSection = event.target.closest('.faq__question__titles');
-    if (!titleSection) return;
+    faqContainer.addEventListener('click', (event) => {
+      const titleSection = event.target.closest('.faq__question__titles');
+      if (!titleSection) return;
 
-    const currentCard = titleSection.closest('.faq__question');
-    const openCards = faqContainer.querySelectorAll('.faq__question.active');
+      const currentCard = titleSection.closest('.faq__question');
 
-    openCards.forEach((card) => {
-      if (card !== currentCard) {
-        card.classList.remove('active');
+      const isOpening = !currentCard.classList.contains('active');
+
+      if (isOpening) {
+        const questionTitleEl = currentCard.querySelector(
+          '.faq__question__title'
+        );
+        const questionText = questionTitleEl
+          ? questionTitleEl.innerText.replace(/"/g, '')
+          : 'Pergunta Desconhecida';
+
+        if (!perguntasRastreadas.has(questionText)) {
+          if (typeof fbq === 'function') {
+            fbq('trackCustom', 'FAQ_Interact', {
+              content_name: 'Mapa de Objecoes',
+              content_category: 'FAQ',
+              action: 'Leu a pergunta',
+              question_text: questionText,
+            });
+            console.debug(
+              `Meta Pixel: Evento 'FAQ_Interact' disparado para a objeção: ${questionText}`
+            );
+          }
+          perguntasRastreadas.add(questionText);
+        }
       }
+
+      const openCards = faqContainer.querySelectorAll('.faq__question.active');
+      openCards.forEach((card) => {
+        if (card !== currentCard) {
+          card.classList.remove('active');
+        }
+      });
+
+      currentCard.classList.toggle('active');
     });
 
-    currentCard.classList.toggle('active');
-  });
-
-  renderFaqs();
+    renderFaqs();
+  }
 
   const ctaOptions = document.querySelectorAll('.cta__form__item');
   ctaOptions.forEach((element) => {
-    element.addEventListener('click', (event) => {
+    element.addEventListener('click', () => {
       ctaOptions.forEach((option) => {
         if (option.classList.contains('active')) {
           option.classList.remove('active');
@@ -204,70 +258,163 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  let calculadoraRastreada = false;
+  function trackCalculadoraIntencao() {
+    if (!calculadoraRastreada && typeof fbq === 'function') {
+      fbq('trackCustom', 'Calculator_Interact', {
+        content_name: 'Calculadora de Prejuizo',
+        action: 'Interagiu com os sliders',
+      });
+      calculadoraRastreada = true;
+    }
+  }
+
   ['visitors', 'ticket', 'conversion', 'speed'].forEach((id) => {
-    document.getElementById(id).addEventListener('input', updateCalculator);
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', updateCalculator);
+      el.addEventListener('change', trackCalculadoraIntencao);
+    }
   });
-  updateCalculator();
+
+  if (document.getElementById('visitors')) {
+    updateCalculator();
+  }
 
   const ctaSubmitButton = document.getElementById('form-captura');
 
-  ctaSubmitButton.addEventListener('submit', async (evento) => {
-    evento.preventDefault();
+  if (ctaSubmitButton) {
+    ctaSubmitButton.addEventListener('submit', async (evento) => {
+      evento.preventDefault();
 
-    const form = evento.target;
-    const formData = new FormData(form);
+      const form = evento.target;
+      const formData = new FormData(form);
 
-    const desafioAtivo = document.querySelector('.cta__form__item.active')?.id;
-    if (desafioAtivo) {
-      formData.append('desafio', desafioAtivo);
-    }
-
-    const data = Object.fromEntries(formData.entries());
-    const errorBox = document.getElementById('formError');
-    const submitBtn = form.querySelector('button[type="submit"]');
-
-    let errors = [];
-    if (!data.ctaNome || data.ctaNome.trim().length < 3)
-      errors.push('Nome muito curto.');
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.ctaEmail))
-      errors.push('E-mail inválido.');
-
-    const telefoneLimpo = data.ctaTel?.replace(/\D/g, '');
-    if (!telefoneLimpo || telefoneLimpo.length < 10)
-      errors.push('Telefone inválido.');
-
-    if (!desafioAtivo) errors.push('Selecione um desafio.');
-
-    if (errors.length > 0) {
-      errorBox.innerHTML = errors.join('<br>');
-      return;
-    }
-
-    try {
-      errorBox.innerHTML = 'Enviando...';
-      submitBtn.disabled = true;
-
-      const response = await fetch('./api/form-lead.php', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        errorBox.style.color = '#00ff88';
-        errorBox.innerHTML = 'Aguarde...';
-        setTimeout(() => {
-          form.reset();
-          errorBox.innerHTML = result.message;
-        }, 1500);
-      } else {
-        throw new Error(result.message || 'Erro no servidor.');
+      const desafioAtivo = document.querySelector(
+        '.cta__form__item.active'
+      )?.id;
+      if (desafioAtivo) {
+        formData.append('desafio', desafioAtivo);
       }
-    } catch (err) {
-      errorBox.innerHTML = 'Falha técnica: ' + err.message;
-    } finally {
-      submitBtn.disabled = false;
+
+      const data = Object.fromEntries(formData.entries());
+      const errorBox = document.getElementById('formError');
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      let errors = [];
+      if (!data.ctaNome || data.ctaNome.trim().length < 3)
+        errors.push('Nome muito curto.');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.ctaEmail))
+        errors.push('E-mail inválido.');
+
+      const telefoneLimpo = data.ctaTel?.replace(/\D/g, '');
+      if (!telefoneLimpo || telefoneLimpo.length < 10)
+        errors.push('Telefone inválido.');
+      if (!desafioAtivo) errors.push('Selecione um desafio.');
+
+      if (errors.length > 0) {
+        errorBox.innerHTML = errors.join('<br>');
+        return;
+      }
+
+      try {
+        errorBox.innerHTML = 'Enviando...';
+        submitBtn.disabled = true;
+
+        const response = await fetch('./api/form-lead.php', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          errorBox.style.color = '#00ff88';
+          errorBox.innerHTML = 'Sucesso! Aguarde o redirecionamento...';
+
+          if (typeof fbq === 'function') {
+            fbq(
+              'track',
+              'Lead',
+              {
+                value: result.dados_lead.valor,
+                currency: 'BRL',
+                content_category: result.dados_lead.desafio,
+              },
+              {
+                eventID: result.dados_lead.transaction_id,
+              }
+            );
+          }
+
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'lead_gerado_sucesso',
+            lead_value: result.dados_lead.valor,
+            lead_type: result.dados_lead.desafio,
+            transaction_id: result.dados_lead.transaction_id,
+          });
+
+          setTimeout(() => {
+            if (result.redirect) {
+              window.location.href = result.redirect;
+            }
+          }, 1500);
+        } else {
+          throw new Error(result.message || 'Erro no processamento dos dados.');
+        }
+      } catch (err) {
+        errorBox.innerHTML = 'Falha técnica: ' + err.message;
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  }
+  const marcosAlcancados = new Set();
+  const marcosParaRastrear = [50, 75, 90];
+
+  function calcularERastrearScroll() {
+    const alturaTotal =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+    const scrollAtual = window.scrollY || document.documentElement.scrollTop;
+
+    if (alturaTotal <= 0) return;
+
+    const porcentagemRolada = (scrollAtual / alturaTotal) * 100;
+
+    marcosParaRastrear.forEach((marco) => {
+      if (porcentagemRolada >= marco && !marcosAlcancados.has(marco)) {
+        marcosAlcancados.add(marco);
+
+        if (typeof fbq === 'function') {
+          fbq('trackCustom', 'Scroll_Depth', {
+            content_name: 'Engajamento de Leitura',
+            porcentagem: `${marco}%`,
+            action: `Rolou ${marco}% da pagina`,
+          });
+          console.debug(
+            `Meta Pixel: Evento 'Scroll_Depth' disparado para o marco de ${marco}%.`
+          );
+        }
+      }
+    });
+
+    if (marcosAlcancados.size === marcosParaRastrear.length) {
+      window.removeEventListener('scroll', otimizarScroll);
     }
-  });
+  }
+
+  let ticking = false;
+  function otimizarScroll() {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        calcularERastrearScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('scroll', otimizarScroll, { passive: true });
 });
