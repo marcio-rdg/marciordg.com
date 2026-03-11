@@ -83,6 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fetch('./api/pageview.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        priority: 'low', // <--- Adiciona esta linha
         body: JSON.stringify({
           event_id: window.pvEventId,
           url: window.location.href,
@@ -380,32 +381,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  let alturaTotalCache = 0;
   const marcosAlcancados = new Set();
   const marcosParaRastrear = [50, 75, 90];
 
-  function calcularERastrearScroll() {
-    const alturaTotal =
+  function atualizarDimensoes() {
+    alturaTotalCache =
       document.documentElement.scrollHeight -
       document.documentElement.clientHeight;
+  }
+
+  function calcularERastrearScroll() {
+    if (alturaTotalCache <= 0) return;
+
     const scrollAtual = window.scrollY || document.documentElement.scrollTop;
-
-    if (alturaTotal <= 0) return;
-
-    const porcentagemRolada = (scrollAtual / alturaTotal) * 100;
+    const porcentagemRolada = (scrollAtual / alturaTotalCache) * 100;
 
     marcosParaRastrear.forEach((marco) => {
       if (porcentagemRolada >= marco && !marcosAlcancados.has(marco)) {
         marcosAlcancados.add(marco);
-
         if (typeof fbq === 'function') {
           fbq('trackCustom', 'Scroll_Depth', {
-            content_name: 'Engajamento de Leitura',
             porcentagem: `${marco}%`,
             action: `Rolou ${marco}% da pagina`,
           });
-          console.debug(
-            `Meta Pixel: Evento 'Scroll_Depth' disparado para o marco de ${marco}%.`
-          );
         }
       }
     });
@@ -414,6 +414,9 @@ document.addEventListener('DOMContentLoaded', () => {
       window.removeEventListener('scroll', otimizarScroll);
     }
   }
+
+  window.addEventListener('load', atualizarDimensoes);
+  window.addEventListener('resize', atualizarDimensoes);
 
   let ticking = false;
   function otimizarScroll() {
