@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (window.pvEventId) {
-    setTimeout(() => {
+    const dispararPageView = () => {
       fetch('./api/pageview.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -88,7 +88,15 @@ document.addEventListener('DOMContentLoaded', () => {
           url: window.location.href,
         }),
       }).catch(() => {});
-    }, 500);
+    };
+
+    window.addEventListener('load', () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(dispararPageView);
+      } else {
+        setTimeout(dispararPageView, 1000);
+      }
+    });
   }
 
   const btnWhatsappNav = document.getElementById('cta-whatsapp-nav');
