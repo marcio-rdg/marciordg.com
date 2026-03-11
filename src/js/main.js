@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     }
 
-    fetch('/public/api/contact.php', {
+    fetch('./api/contact.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       keepalive: true,
@@ -79,14 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (window.pvEventId) {
-    fetch('/public/api/pageview.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_id: window.pvEventId,
-        url: window.location.href,
-      }),
-    }).catch(() => {});
+    setTimeout(() => {
+      fetch('./api/pageview.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_id: window.pvEventId,
+          url: window.location.href,
+        }),
+      }).catch(() => {});
+    }, 500);
   }
 
   const btnWhatsappNav = document.getElementById('cta-whatsapp-nav');
