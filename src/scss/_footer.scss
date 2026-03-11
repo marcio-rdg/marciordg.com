@@ -34,11 +34,17 @@
         }
     }
 
-    &__link:nth-child(4) {
-        fill: var(--light-2);
 
-        &:hover {
-            fill: var(--light-1);
+    .footer__item.tiktok {
+
+        svg {
+
+            fill: var(--light-2);
+
+            &:hover {
+                fill: var(--light-1);
+            }
         }
     }
+
 }
